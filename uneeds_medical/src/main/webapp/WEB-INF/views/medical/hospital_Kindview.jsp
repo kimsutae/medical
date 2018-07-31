@@ -290,6 +290,8 @@ function bindKind(){
 
 
 		};
+	
+	var markers = [], infoWindows = [];
 
 	// 병원 목록 불러오기1	
 	function bindhospital(){
@@ -314,19 +316,20 @@ function bindKind(){
 		
 		
 	}
-
+	
 		
 	// 병원 목록 불러오기2
 	function bindList(data){
 		var ul = $("#hospitalList");
 		var its=$(data).find("item");
 		ul.empty();
-		var markers = [], infoWindows = [];
+		
+
 		
 		/* 메뉴 불러오기 */
 		for(var i=0; i<its.length; i++){
 		/* site-box 병원 메뉴 */
-			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/hospitalDetailView'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>")
+			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='#'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>")
 			
 
 
@@ -403,17 +406,17 @@ function bindKind(){
 			//마커 지우기
 			function deleteMarkers(map, markers) {
 			    var mapBounds = map.getBounds();
-			    var marker, position, infoWindow;
+			    var marker, position, infowindow;
 
 			    for (var i = 0; i < markers.length; i++) {
 
 			        marker = markers[i]
 			        position = marker.getPosition();
-			        infoWindow = infoWindows[i];
+			        infowindow = infoWindows[i];
 
-			        if (mapBounds.hasLatLng(position) || infoWindow.getMap()) {
+			        if (mapBounds.hasLatLng(position) || infowindow.getMap()) {
 			        	hideMarker(map, marker);
-			        	infoWindow.close();
+			        	infowindow.close();
 			        } 
 			    }
 			}
@@ -436,7 +439,7 @@ function bindKind(){
 				    return function(e) {
 				        var marker = markers[seq],
 				            infoWindow = infoWindows[seq];
-				        map.setCenter(markers[seq].YPos,markers[seq].XPos);
+
 
 				        if (infoWindow.getMap()) {
 				            infoWindow.close();
@@ -486,7 +489,7 @@ function bindKind(){
 						
 	};
 		
-	
+
 
 $(function(){
 	
@@ -510,27 +513,29 @@ $(function(){
 		
 	  //병원 클릭하면 자세히 보기
 	  $("#site-box").on("click","#tt", function(){
-			$.ajax({
-				url : "hospitalDetailView",
-				type : 'GET',
-				dataType : 'json',
-				data : {
-				    'ykiho' : $(this).data('code'),
-				    'mapx' : $(this).data('mapx'),
-				    'mapy' : $(this).data('mapy')
-				    },
-				success : function(data, status){ // 왼료함수
-					
-				
-
-				},		error : function(request, status, error){  //에러함수
-
-				}
-			});
 		  
-			
+	  console.log($(this).data('code'));
+	  console.log($(this).data('mapx'));
+	  console.log($(this).data('mapy'));
+	  
+	  $.ajax({
+		  url : 'detailViewPage',
+			type : 'GET',
+			data : {
+				  'ykiho' : $(this).data('code'),
+				  'map_x' : $(this).data('mapx'),
+				  'map_y' : $(this).data('mapy')
+			},success : function(data){
+				alert(data);
+		  	  
+	 		 }, error : function(request, state, error){
+					alert(error);
+			}
+		
 		});
+	  });
 
+	  
 	  
 	  
 });

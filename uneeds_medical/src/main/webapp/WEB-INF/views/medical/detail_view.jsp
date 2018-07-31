@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Hospital</title>
+<title>Hospital Detail</title>
 
-<link rel="stylesheet" href="../resources/css/project.css">
-<link rel="stylesheet" href="../resources/css/font.css">
+<link rel="stylesheet" href="../../../resources/medical/css/project.css">
+<link rel="stylesheet" href="../../../resources/medical/css/font.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -35,7 +35,7 @@
  	   map: map,
  	   icon: 
  	   {
-  	      url: '../resources/img/ico_spot.png',
+  	      url: '../../../resources/medical/img/ico_spot.png',
   	      size: new naver.maps.Size(30, 35),
   	      origin: new naver.maps.Point(0, 0),
   	      anchor: new naver.maps.Point(11, 35)				        
@@ -48,15 +48,7 @@ var map = new naver.maps.Map('map', mapOptions);
 
   } );
   
-  
- function bindDetail(){
-	 
 
-	var ul = $("#viewMap");
-		ul.empty();
-		ul.append("")
-  
- }
 		
 		
   </script>
@@ -71,7 +63,7 @@ var map = new naver.maps.Map('map', mapOptions);
             <li><a href="#"><b>로그인</b></a></li>
 
         </ul>
-    </div>
+</div>
 <style type="text/css">
 
 .btn-search {background: red none repeat scroll 0 0; border-radius: 25px; color: #fff; font-size: 19px; height: 43px; padding: 0 35px; text-shadow: 1px 1px rgba(0, 0, 0, 0.5); }
@@ -266,81 +258,24 @@ var map = new naver.maps.Map('map', mapOptions);
 </style>
 
 
-<div id="select_search_field" style="display:none;">
-    <h2>선택하세요</h2>
-    <button type="button" class="bClose"><i class="material-icons">close</i></button>
-    <nav class="nav1">
-        <ul>
-            <li><a href="#" data-t_id="" data-site_x_url="/html/map_ho_x.php">병원전체</a></li>
-            <li><a href="#" data-tab="tab1">종류별</a></li>
-            <li><a href="#" data-tab="tab2">증상별</a></li>
-            <li><a href="#" data-tab="tab3">테마별</a></li>
-        </ul>
-    </nav>
-    <nav class="nav2">
-        <ul>
-            <li><a href="/html/map.php?site=ph" data-t_id="" data-site_x_url="/html/map_ph_x.php">동네약국</a></li>
-            <li><a href="/html/map.php?site=ho&t_id=204" data-t_id="204" data-site_x_url="/html/map_ho_x.php">응급진료</a></li>
-            <li><a href="/html/map.php?site=ho&t_id=203" data-t_id="203" data-site_x_url="/html/map_ho_x.php">한의원</a></li>
-        </ul>
-    </nav>
-    
-    <!----{{{ 종류별----->
-    <div class="icon tab1">
-        <ul>
-            <li><a href="/html/map.php?site=ho&t_id=1" data-t_id="1" data-site_x_url="/html/map_ho_x.php"><img src="https://goodhospital.kr/theme/gh/img/icon/b_01.png">
-                <p>성형외과</p>
-                </a></li>
-            
-        </ul>
-    </div>
-    <!----}}} 종류별-----> 
-    
-    <!----{{{ 증상별----->
-    <div class="icon tab2" >
-        <ul>
-            <!-- <li><a href="/html/map.php?site=ho&t_id=0" data-t_id="" data-site_x_url="/html/map_ho_x.php"><img src="https://goodhospital.kr/theme/gh/img/icon/c_01.png">
-                    <p>병원전체</p>
-                    </a></li>-->
-            <li><a href="/html/map.php?site=ho&t_id=101" data-t_id="101" data-site_x_url="/html/map_ho_x.php"><img src="https://goodhospital.kr/theme/gh/img/icon/a_01.png">
-                <p>두통/만성피로</p>
-                </a></li>
-            
-        </ul>
-    </div>
-    <!----}}} 증상별-----> 
-    
-    <!----{{{ 테마별----->
-    <div class="icon tab3">
-        <ul>
-            <li><a href="/html/map.php?site=ho&t_id=202" data-t_id="202" data-site_x_url="/html/map_ho_x.php"><img src="https://goodhospital.kr/theme/gh/img/icon/c_01.png">
-                <p>종합병원/보건소</p>
-                </a></li>
-            
-        </ul>
-    </div>
-    <!----}}} 테마별-----> 
-</div>
-
-    
     <div id="category-wrap">
         <div style="width:1200px; margin:0 auto;">
             
             <nav id="gnb">
                 <h2>메인메뉴</h2>
                 <ul id="gnb_1dul">
-                    <li id="logo"> <a href="main_view"><img src="../resources/img/doc.png" alt=""></a> </li>
+                    <li id="logo"> <a href="main_view"><img src="../../../resources/medical/img/doc.png" alt=""></a> </li>
                     <li style="display:none;"><a href="#" id="slide-menu-xxx" data-view="slide-type">추천-병원찾기</a></li>
                     <li><a href="hospitalViewPage" id="slide-menu" data-view="slide-type">병원찾기</a></li>
                     <li><a href="hospitalViewPage">응급진료</a></li>
-                    <li><a href="/medicalViewPage">동네약국</a></li>
+                    <li><a href="medicalViewPage">동네약국</a></li>
                 </ul>
                 
                 <!--상단 검색-->
                 <div class="total_search_area01">
                     <div class="total_search01">
                         <input type="text" id="headerSearchValue" placeholder="키워드를 검색하세요." name="Name" title="검색어 입력">
-                        <a href="#" id="btn-site-search"><img src="https://goodhospital.kr/theme/gh/images/search_icon_02.png"></a>
+                        <a href="#" id="btn-site-search"><img src="../../../resources/medical/img/search_icon_02.png"></a>
                         </div>
                     
                 </div>
@@ -348,52 +283,7 @@ var map = new naver.maps.Map('map', mapOptions);
                 
             </nav>
         </div>
-        <div id="h-nav-wrap">
-            <div id="h-nav">
-                <button class="h-close"><i class="material-icons">close</i></button>
-                <ul id="h-type" class="clearfix">
-                    <li class="on" data-view="slide-type">종류별</li>
-                    <li data-view="slide-symptom">증상별</li>
-                    <li data-view="slide-theme">테마별</li>
-                    <li><a href="/html/map.php?site=ho&t_id=0">병원전체</a></li>
-                </ul>
-                <div id="h-slide">
-                    <div id="slide-type" class="slide-wrap">
-                        <ul class="slide-box">
-                            <li>
-                                <div> <a href="javascript:change_department('1');"><img src="https://goodhospital.kr/theme/gh/images/menu_img/menu_icon_02_01_off.png">
-                                      <div class="menu_icon_txt">성형외과</div></a>
-                                </div>
-                            </li>
-                            
-                       </ul>
-                    </div>
-                    <div id="slide-symptom" class="slide-wrap">
-                        <ul class="slide-box">
-                            <li>
-                                
-                                <div> <a href="javascript:change_department('101');"><img src="https://goodhospital.kr/theme/gh/images/menu_img/menu_icon_01_01_off.png">
-                                      <div class="menu_icon_txt">두통/만성피로</div></a>
-                                </div>
-                                
-                            </li>
-                           
-                        </ul>
-                    </div>
-                    <div id="slide-theme" class="slide-wrap">
-                        <ul class="slide-box">
-                           <li>
-                                <div> <a href="javascript:change_department('201');"><img src="https://goodhospital.kr/theme/gh/images/menu_img/menu_icon_03_09_off.png">
-                                      <div class="menu_icon_txt">외국인진료</div></a>
-                                </div>
-                            </li>
-                           
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
+        
     </div>
     <!-- } 상단 끝 -->
     

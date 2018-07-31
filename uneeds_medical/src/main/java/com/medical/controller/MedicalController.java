@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.medical.domain.MedicalVO;
@@ -78,6 +79,21 @@ public class MedicalController {
 	public String hospitaclView() throws Exception {
 		return "hospital_Kindview";
 	}
+	
+	
+	// detail_view page
+	@RequestMapping(value= "/detailViewPage", method = RequestMethod.GET)
+	public String detailView(HttpServletRequest request, Model m) throws Exception {
+		String ykiho = request.getParameter("ykiho");
+		String xpos = request.getParameter("map_x");
+		String ypos = request.getParameter("map_y");
+		
+		m.addAttribute("ykiho", ykiho);
+		m.addAttribute("map_x", xpos);
+		m.addAttribute("map_y", ypos);
+		return "detail_view";
+	}
+	
 	
 	// select sido
 	@RequestMapping(value= "/hospitalSidoCode", method = RequestMethod.GET)
@@ -358,16 +374,25 @@ public class MedicalController {
 		
 	}
 	
+	
+	
 	//hospital infomation detail view
 		@RequestMapping(value= "/hospitalDetailView", method = RequestMethod.GET)
-		public String hospitalDetailView(HttpServletRequest request, Model m) throws Exception{
+		public ResponseEntity<String> hospitalDetailView(HttpServletRequest request, Model m) throws Exception{
 			
 			HttpHeaders responseHeader = new HttpHeaders();
 			responseHeader.add("Content-type", "application/json; charset=utf-8");
 			String ykiho = request.getParameter("ykiho");
 			 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+			 
+			String map_x = request.getParameter("map_x");
+			String map_y = request.getParameter("map_y");
 			
-			 System.out.println(ykiho);
+			System.out.println("================");
+			System.out.println("ykiho : "+ykiho);
+			System.out.println("map_x : "+map_x);
+			System.out.println("map_y : "+map_y);
+
 			
 			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getDetailInfo"); /*URL*/
 			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
@@ -397,9 +422,11 @@ public class MedicalController {
 			conn.disconnect();
 			sb.toString();
 			m.addAttribute("list", sb);
+			m.addAttribute("xpos",map_x);
+			m.addAttribute("ypos",map_y);
 			System.out.println(sb.toString());
 			
-			 return "detail_view";
+			return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
 		}
 	
 	
