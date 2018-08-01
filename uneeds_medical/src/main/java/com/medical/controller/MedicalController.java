@@ -84,13 +84,7 @@ public class MedicalController {
 	// detail_view page
 	@RequestMapping(value= "/detailViewPage", method = RequestMethod.GET)
 	public String detailView(HttpServletRequest request, Model m) throws Exception {
-		String ykiho = request.getParameter("ykiho");
-		String xpos = request.getParameter("map_x");
-		String ypos = request.getParameter("map_y");
-		
-		m.addAttribute("ykiho", ykiho);
-		m.addAttribute("map_x", xpos);
-		m.addAttribute("map_y", ypos);
+
 		return "detail_view";
 	}
 	
@@ -198,7 +192,6 @@ public class MedicalController {
 
 	sido = Objects.isNull(sido) ? "서울" : sido;
 	sigun = Objects.isNull(sido) ? "강남구" : sigun;
-	System.out.println(sido);
 
 	urlBuilder.append("&" + URLEncoder.encode("sidoCdNm","UTF-8") + "=" + URLEncoder.encode(sido, "UTF-8")); /*addrTp 3일 경우 시도명 입력*/
 	urlBuilder.append("&" + URLEncoder.encode("sgguCdNm","UTF-8") + "=" + URLEncoder.encode(sigun, "UTF-8")); /*addrTp 3일 경우 시도명 입력*/
@@ -378,21 +371,14 @@ public class MedicalController {
 	
 	//hospital infomation detail view
 		@RequestMapping(value= "/hospitalDetailView", method = RequestMethod.GET)
-		public ResponseEntity<String> hospitalDetailView(HttpServletRequest request, Model m) throws Exception{
+		public ResponseEntity<String> hospitalDetailView(HttpServletRequest request) throws Exception{
 			
 			HttpHeaders responseHeader = new HttpHeaders();
 			responseHeader.add("Content-type", "application/json; charset=utf-8");
 			String ykiho = request.getParameter("ykiho");
 			 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
-			 
-			String map_x = request.getParameter("map_x");
-			String map_y = request.getParameter("map_y");
-			
-			System.out.println("================");
-			System.out.println("ykiho : "+ykiho);
-			System.out.println("map_x : "+map_x);
-			System.out.println("map_y : "+map_y);
 
+			System.out.println("ykiho : "+ykiho);
 			
 			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getDetailInfo"); /*URL*/
 			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
@@ -400,7 +386,7 @@ public class MedicalController {
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
 
-			urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+			urlBuilder.append("&" + URLEncoder.encode(ykiho,"UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
 
 			URL url = new URL(urlBuilder.toString());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -421,9 +407,7 @@ public class MedicalController {
 			rd.close();
 			conn.disconnect();
 			sb.toString();
-			m.addAttribute("list", sb);
-			m.addAttribute("xpos",map_x);
-			m.addAttribute("ypos",map_y);
+
 			System.out.println(sb.toString());
 			
 			return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);

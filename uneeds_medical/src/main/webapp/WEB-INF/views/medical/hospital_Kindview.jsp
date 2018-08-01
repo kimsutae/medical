@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<htm>
 <head>
 <title>Hospital</title>
 
@@ -191,7 +191,9 @@ function bindSido(){
 			}
 		},
 		error : function(request, state, error){
-			alert(error);
+			alert("실패");
+			console.log(error);
+		
 		}
 
 		});
@@ -269,7 +271,8 @@ function bindKind(){
 			gd.append("<option value='"+ite.find("dgsbjtCd").text()+"'>"+ite.find("dgsbjtCdCmmt").text()+"</option>");
 		}
 		}, error : function(request, state, error){
-			alert(error);
+			alert("아니야");
+			console.log(error);
 		}
 		
 		
@@ -286,9 +289,7 @@ function bindKind(){
 	
 	var mapOptions = {
 		    center: new naver.maps.LatLng(37.5668260055, 126.978656786),
-		    zoom: 10,
-
-
+		    zoom: 10
 		};
 	
 	var markers = [], infoWindows = [];
@@ -309,7 +310,7 @@ function bindKind(){
 				bindList(data);	
 
 			}, error : function(request, state, error){
-				alert(error);
+				alert("아니래");
 			}
 					
 			});
@@ -329,9 +330,9 @@ function bindKind(){
 		/* 메뉴 불러오기 */
 		for(var i=0; i<its.length; i++){
 		/* site-box 병원 메뉴 */
-			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='#'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>")
+// 			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='#'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>")
+			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/uneeds/medical/detailViewPage?ykiho="+$(its[i]).find("ykiho").text()+"&xpos="+$(its[i]).find("YPos").text()+"&ypos="+$(its[i]).find("XPos").text()+"'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>");
 			
-
 
 			/* 마커 찍기 */
 			var position = new naver.maps.LatLng($(its[i]).find("YPos").text(), $(its[i]).find("XPos").text());
@@ -354,7 +355,7 @@ function bindKind(){
 			var contentString = [
 		        '<div class="iw_inner"><h3>'+$(its[i]).find("yadmNm").text()+'</h3><p>'+$(its[i]).find("addr").text()+'<br />'+$(its[i]).find("telno").text()+'<br /><a href='+$(its[i]).find("hospUrl").text()+'>'+$(its[i]).find("hospUrl").text()+'</a></p></div>'].join('');
 			
-			/* 마커 style */
+			/* 마커 자세히보기 style */
 			var infowindow = new naver.maps.InfoWindow({
 			    content: contentString,
 			    maxWidth: 500,
@@ -512,28 +513,15 @@ $(function(){
 	 
 		
 	  //병원 클릭하면 자세히 보기
-	  $("#site-box").on("click","#tt", function(){
+// 	  $("#site-box").on("click","#tt", function(){
 		  
-	  console.log($(this).data('code'));
-	  console.log($(this).data('mapx'));
-	  console.log($(this).data('mapy'));
+// 	  console.log($(this).data('code'));
+// 	  console.log($(this).data('mapx'));
+// 	  console.log($(this).data('mapy'));
+    
+// 	  });
 	  
-	  $.ajax({
-		  url : 'detailViewPage',
-			type : 'GET',
-			data : {
-				  'ykiho' : $(this).data('code'),
-				  'map_x' : $(this).data('mapx'),
-				  'map_y' : $(this).data('mapy')
-			},success : function(data){
-				alert(data);
-		  	  
-	 		 }, error : function(request, state, error){
-					alert(error);
-			}
-		
-		});
-	  });
+
 
 	  
 	  

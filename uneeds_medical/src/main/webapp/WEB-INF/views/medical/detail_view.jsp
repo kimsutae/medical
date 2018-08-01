@@ -10,45 +10,50 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=_7kQ5B8ePeaeX3FaD9N8"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=_7kQ5B8ePeaeX3FaD9N8"></script>
  <script>
   $( function() {
     $("#datepicker").datepicker();
+	console.log( Number($("#YPos").val() ));
+	console.log( Number($("#XPos").val() ));
+    var mapx = Number($("#YPos").val());
+    var mapy = Number($("#XPos").val());
     /* 지도 초기 옵션 */
-	var mapOptions = {
-	    center: new naver.maps.LatLng(37.5668260055, 126.978656786),
-	    zoom: 10,
-	    
-        scaleControl: false,
-        logoControl: false,
-        mapDataControl: false,
-        zoomControl: true,
-        minZoom: 1
+	var map = new naver.maps.Map('map', mapOptions);
+    	
+    var mapOptions = {
+    	    center: new naver.maps.LatLng(mapx, mapy),
+    	    zoom: 10,
+    	    
+            scaleControl: false,
+            logoControl: false,
+            mapDataControl: false,
+            zoomControl: true,
+            minZoom: 1
 
-	};
+    	};
+    
+   		var position = new naver.maps.LatLng(mapx, mapy);
+   		
+    	var markerOptions = {
+    			position : position,
+    		zoom: 10,
+     	   map: map,
+     	   icon: 
+     	   {
+      	      url: '../../../resources/medical/img/ico_spot.png',
+      	      size: new naver.maps.Size(30, 35),
+      	      origin: new naver.maps.Point(0, 0),
+      	      anchor: new naver.maps.Point(11, 35)				        
+     	   }
+    	
+    	};
+    	var marker = new naver.maps.Marker(markerOptions);
+    	map.panTo(new naver.maps.LatLng(mapx, mapy));
 
-
-	var markerOptions = {
-		center: new naver.maps.LatLng(37.3595704, 127.105399),
-		zoom: 10,
- 	   map: map,
- 	   icon: 
- 	   {
-  	      url: '../../../resources/medical/img/ico_spot.png',
-  	      size: new naver.maps.Size(30, 35),
-  	      origin: new naver.maps.Point(0, 0),
-  	      anchor: new naver.maps.Point(11, 35)				        
- 	   }
-	
-	};
-var marker = new naver.maps.Marker(markerOptions);
-var map = new naver.maps.Map('map', mapOptions);
-
-
-  } );
+      } );
   
-
 		
 		
   </script>
@@ -56,12 +61,19 @@ var map = new naver.maps.Map('map', mapOptions);
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
+<%
+String code = (String) request.getParameter("ykiho"); 
+String mapx = request.getParameter("xpos");
+String mapy = request.getParameter("ypos");
 
+%>
 <div id="hd_wrapper">
         <ul id="tnb">
                         <li><a href="#">회원가입</a></li>
             <li><a href="#"><b>로그인</b></a></li>
-
+            <li><input type="hidden" name="ykiho" value="<%=code%>" id="ykiho"/></li>
+            <li><input type="hidden" name="XPos" value="<%=mapy%>" id="XPos" /></li> 
+            <li><input type="hidden" name="YPos" value="<%=mapx%>"id="YPos" /></li>
         </ul>
 </div>
 <style type="text/css">
@@ -412,7 +424,7 @@ var map = new naver.maps.Map('map', mapOptions);
 	<div class="hos_b_tit">
 		<span class="tit_area_top_bar"></span>
 			<h1>
-				<div id="site_name">중앙대학교병원</div>
+				<div id="site_name"></div>
 			</h1>
 			<h2>
 				- 주소 : <span id="site_addr">서울특별시 동작구 흑석로 102 (흑석동)</span>
