@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<htm>
+
+<html lang="en">
 <head>
 <title>Hospital</title>
 
@@ -28,9 +29,7 @@
         </ul>
     </div>
 <style type="text/css">
-
 .btn-search {background: red none repeat scroll 0 0; border-radius: 25px; color: #fff; font-size: 19px; height: 43px; padding: 0 35px; text-shadow: 1px 1px rgba(0, 0, 0, 0.5);}
-
 </style>
     
     <div id="category-wrap">
@@ -144,7 +143,6 @@
 <script>
 //좌측 사이트박스 열고 닫기{{{---------------------------------------------
 	$("#btn-open-close").on("click",function(e) {
-
   var $sb = $('#site-box');
   var sbw = $sb.width();
   var $this = $(this);
@@ -156,7 +154,6 @@
     $('#site-box').stop().animate({
       'right': '-' + sbw + 'px'
     }, 400, function() {
-
     });
   } else {
     $this.data('on', '1');
@@ -166,13 +163,12 @@
       'right': '0px'
     }, 400, function() {
       $('#map_box').width(cw - sbw);
-
     });
   }
   $this.blur();
 });
-
 </script>
+
 <script>
 //시 불러오는 함수
 function bindSido(){
@@ -187,17 +183,12 @@ function bindSido(){
 			for(var i=0; i<items.length; i++){
 				 item=$(items[i]);
 				sel.append("<option value='"+item.find("addrCd").text()+"'>"+item.find("addrCdNm").text()+"</option>");
-
 			}
 		},
 		error : function(request, state, error){
-			alert("실패");
-			console.log(error);
-		
+			alert(error);
 		}
-
 		});
-
 }
 
 //군 불러오는 함수
@@ -214,7 +205,6 @@ function bindSelgu(){
 				for(var i=0; i<it.length; i++){
 					 ite=$(it[i]);
 					gd.append("<option value='"+ite.find("addrCd").text()+"'>"+ite.find("addrCdNm").text()+"</option>");
-
 				}
 			},
 			error : function(request, state, error){
@@ -244,7 +234,6 @@ function bindDong(data, state){
 			for(var i=0; i<it.length; i++){
 				 ite=$(it[i]);
 				gd.append("<option value='"+ite.find("addrCd").text()+"'>"+ite.find("addrCdNm").text()+"</option>");
-
 			}
 		},
 		error : function(request, state, error){
@@ -254,7 +243,6 @@ function bindDong(data, state){
 	
 		});
 }
-
 
 //진료과목 불러오는 함수
 function bindKind(){
@@ -271,29 +259,25 @@ function bindKind(){
 			gd.append("<option value='"+ite.find("dgsbjtCd").text()+"'>"+ite.find("dgsbjtCdCmmt").text()+"</option>");
 		}
 		}, error : function(request, state, error){
-			alert("아니야");
-			console.log(error);
+			alert(error);
 		}
 		
 		
 		});
 	
 	
-
 		
 }
-
 
 	/* 지도 초기 옵션 */
 	var map = new naver.maps.Map(document.getElementById('map'), mapOptions);
 	
 	var mapOptions = {
 		    center: new naver.maps.LatLng(37.5668260055, 126.978656786),
-		    zoom: 10
+		    zoom: 10,
 		};
-	
 	var markers = [], infoWindows = [];
-
+	
 	// 병원 목록 불러오기1	
 	function bindhospital(){
 	
@@ -308,9 +292,8 @@ function bindKind(){
 				  'kind' : $("#z4 option:selected").val()
 			},success : function(data, state){
 				bindList(data);	
-
 			}, error : function(request, state, error){
-				alert("아니래");
+				alert(error);
 			}
 					
 			});
@@ -322,18 +305,16 @@ function bindKind(){
 	// 병원 목록 불러오기2
 	function bindList(data){
 		var ul = $("#hospitalList");
-		var its=$(data).find("item");
 		ul.empty();
+		var its=$(data).find("item");
 		
-
-		
+		deleteMarkers(map, markers);
+		markers = [];
+		infoWindows = [];
 		/* 메뉴 불러오기 */
 		for(var i=0; i<its.length; i++){
-		/* site-box 병원 메뉴 */
-// 			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='#'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>")
-			ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/uneeds/medical/detailViewPage?ykiho="+$(its[i]).find("ykiho").text()+"&xpos="+$(its[i]).find("YPos").text()+"&ypos="+$(its[i]).find("XPos").text()+"'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>");
-			
-
+		/* site-box 병원 메뉴 */	
+		ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/uneeds/medical/detailViewPage?ykiho="+$(its[i]).find("ykiho").text()+"&xpos="+$(its[i]).find("YPos").text()+"&ypos="+$(its[i]).find("XPos").text()+"'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>");
 			/* 마커 찍기 */
 			var position = new naver.maps.LatLng($(its[i]).find("YPos").text(), $(its[i]).find("XPos").text());
 			var markerOptions = {
@@ -348,14 +329,13 @@ function bindKind(){
 				    }
 					
 				};
-
 			var marker = new naver.maps.Marker(markerOptions);
 			
 			/* 자세한 정보 보여주기 */
 			var contentString = [
 		        '<div class="iw_inner"><h3>'+$(its[i]).find("yadmNm").text()+'</h3><p>'+$(its[i]).find("addr").text()+'<br />'+$(its[i]).find("telno").text()+'<br /><a href='+$(its[i]).find("hospUrl").text()+'>'+$(its[i]).find("hospUrl").text()+'</a></p></div>'].join('');
 			
-			/* 마커 자세히보기 style */
+			/* 마커 style */
 			var infowindow = new naver.maps.InfoWindow({
 			    content: contentString,
 			    maxWidth: 500,
@@ -373,26 +353,21 @@ function bindKind(){
 		    
 		    map.panTo(new naver.maps.LatLng($(its[i]).find("YPos").text(), $(its[i]).find("XPos").text() ) );
 		    
-
 		}; /* 반복문 끝 */
 				
 		/* 정보 보여주기 */
 		naver.maps.Event.addListener(map, 'idle', function() {		
 		    updateMarkers(map, markers);
 		});
-
 			for (var i=0, ii=markers.length; i<ii; i++) {
 			    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
 			}
 		
 			// 마커 업데이트
 				function updateMarkers(map, markers) {
-
 				    var mapBounds = map.getBounds();
 				    var marker, position;
-
 				    for (var i = 0; i < markers.length; i++) {
-
 				        marker = markers[i]
 				        position = marker.getPosition();
 				        
@@ -408,13 +383,11 @@ function bindKind(){
 			function deleteMarkers(map, markers) {
 			    var mapBounds = map.getBounds();
 			    var marker, position, infowindow;
-
+			    
 			    for (var i = 0; i < markers.length; i++) {
-
-			        marker = markers[i]
+			        marker = markers[i];
 			        position = marker.getPosition();
 			        infowindow = infoWindows[i];
-
 			        if (mapBounds.hasLatLng(position) || infowindow.getMap()) {
 			        	hideMarker(map, marker);
 			        	infowindow.close();
@@ -424,13 +397,11 @@ function bindKind(){
 			
 			// 마커 보여주기
 				function showMarker(map, marker) {
-
 				    if (marker.setMap()) return;
 				    marker.setMap(map);
 				}
 			// 마커 감추기
 				function hideMarker(map, marker) {
-
 				    if (!marker.setMap()) return;
 				    marker.setMap(null);
 				}
@@ -440,8 +411,6 @@ function bindKind(){
 				    return function(e) {
 				        var marker = markers[seq],
 				            infoWindow = infoWindows[seq];
-
-
 				        if (infoWindow.getMap()) {
 				            infoWindow.close();
 				            returnBorder(seq);
@@ -452,10 +421,9 @@ function bindKind(){
 				    }
 				}
 			
-
 			
 			//선택한 병원 및 약국 맵에서 정보 보기
-			$("#site-box").on("click",".icon-no", function(){				
+			$("#site-box").on("click",".icon-no", function(){
 				var ind = $(this).data('index');				
 				listClickHandler(ind);
 				
@@ -490,8 +458,6 @@ function bindKind(){
 						
 	};
 		
-
-
 $(function(){
 	
 	// 시 리스트 불러오기
@@ -510,23 +476,33 @@ $(function(){
 		  bindhospital();		  
 	});
 	  
-	 
-		
-	  //병원 클릭하면 자세히 보기
-// 	  $("#site-box").on("click","#tt", function(){
-		  
-// 	  console.log($(this).data('code'));
-// 	  console.log($(this).data('mapx'));
-// 	  console.log($(this).data('mapy'));
-    
-// 	  });
-	  
-
-
-	  
 	  
 	  
 });
+
+
+$(function (){
+	$.ajax({
+		url : 'hospitalInfoView',
+		type : 'GET',
+		dataType: 'xml',
+		data : {
+			  'sido' : 110000,
+			  'sigun' : 110001,
+			  'kind' : 01
+		},success : function(data, state){
+			bindList(data);	
+		}, error : function(request, state, error){
+			alert("설마?");
+		}
+				
+		});
+	
+	
+});
+
+
+
 
 
 </script>

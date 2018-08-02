@@ -2,11 +2,10 @@ package com.medical.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
 import java.util.Locale;
 import java.util.Objects;
 
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.medical.domain.MedicalVO;
@@ -37,11 +35,7 @@ public class MedicalController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MedicalController.class);
 
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-		
+	      
 	@RequestMapping(value = "/main_view")
 	public String view(Locale locale, Model model) {
 		return "main_view";
@@ -55,7 +49,7 @@ public class MedicalController {
 		
 		try {
 			r.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -83,7 +77,7 @@ public class MedicalController {
 	
 	// detail_view page
 	@RequestMapping(value= "/detailViewPage", method = RequestMethod.GET)
-	public String detailView(HttpServletRequest request, Model m) throws Exception {
+	public String detailView() throws Exception {
 
 		return "detail_view";
 	}
@@ -367,26 +361,60 @@ public class MedicalController {
 		
 	}
 	
+	//hospital information 병원 이름 및 주소
+	@RequestMapping(value= "/hospitalFacilityInfo", method = RequestMethod.GET)
+	public ResponseEntity<String> hospitalFacilityInfo(HttpServletRequest request) throws Exception{
+		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.add("Content-type", "application/xml; charset=utf-8");
+		
+		String ykiho = request.getParameter("ykiho");
+		 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+		 
+	        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getFacilityInfo"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+			urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+	        urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+	        URL url = new URL(urlBuilder.toString());
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        System.out.println("Response code: " + conn.getResponseCode());
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        rd.close();
+	        conn.disconnect();
+	        System.out.println(sb.toString());
+		
+		return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+	}
 	
-	
-	//hospital infomation detail view
+	//hospital infomation detail 운영시간 등
 		@RequestMapping(value= "/hospitalDetailView", method = RequestMethod.GET)
 		public ResponseEntity<String> hospitalDetailView(HttpServletRequest request) throws Exception{
 			
 			HttpHeaders responseHeader = new HttpHeaders();
-			responseHeader.add("Content-type", "application/json; charset=utf-8");
+			responseHeader.add("Content-type", "application/xml; charset=utf-8");
 			String ykiho = request.getParameter("ykiho");
 			 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
 
-			System.out.println("ykiho : "+ykiho);
-			
 			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getDetailInfo"); /*URL*/
 			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
 			urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
 
-			urlBuilder.append("&" + URLEncoder.encode(ykiho,"UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+			urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
 
 			URL url = new URL(urlBuilder.toString());
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -412,6 +440,170 @@ public class MedicalController {
 			
 			return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
 		}
+		
+		//hospital infomation detail 진료과목
+				@RequestMapping(value= "/hospitalSbjectInfoList", method = RequestMethod.GET)
+				public ResponseEntity<String> hospitalSbjectInfoList(HttpServletRequest request) throws Exception{
+					HttpHeaders responseHeader = new HttpHeaders();
+					responseHeader.add("Content-type", "application/xml; charset=utf-8");
+					String ykiho = request.getParameter("ykiho");
+					 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+					 
+					 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getMdlrtSbjectInfoList"); /*URL*/
+						urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+						urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+						urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+						urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+
+						urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+
+						URL url = new URL(urlBuilder.toString());
+						HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+						conn.setRequestMethod("GET");
+						conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
+						System.out.println("Response code: " + conn.getResponseCode());
+						BufferedReader rd;
+						if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+						    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						} else {
+						    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+						}
+						StringBuilder sb = new StringBuilder();
+						String line;
+						while ((line = rd.readLine()) != null) {
+						    sb.append(line);
+						}
+						rd.close();
+						conn.disconnect();
+						sb.toString();
+
+						System.out.println(sb.toString());
+					 
+					return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+				}
+				
+				
+				//hospital infomation detail 트수진료
+				@RequestMapping(value= "/hospitalMdlrtInfoList", method = RequestMethod.GET)
+				public ResponseEntity<String> hospitalMdlrtInfoList(HttpServletRequest request) throws Exception{
+					HttpHeaders responseHeader = new HttpHeaders();
+					responseHeader.add("Content-type", "application/xml; charset=utf-8");
+					String ykiho = request.getParameter("ykiho");
+					 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+					 
+					 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getSpclMdlrtInfoList"); /*URL*/
+						urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+						urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+						urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+						urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+
+						urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+
+						URL url = new URL(urlBuilder.toString());
+						HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+						conn.setRequestMethod("GET");
+						conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
+						System.out.println("Response code: " + conn.getResponseCode());
+						BufferedReader rd;
+						if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+						    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						} else {
+						    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+						}
+						StringBuilder sb = new StringBuilder();
+						String line;
+						while ((line = rd.readLine()) != null) {
+						    sb.append(line);
+						}
+						rd.close();
+						conn.disconnect();
+						sb.toString();
+
+						System.out.println(sb.toString());
+					 
+					return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+				}
+				
+				
+				//hospital infomation detail 교통정보
+				@RequestMapping(value= "/hospitalTransport", method = RequestMethod.GET)
+				public ResponseEntity<String> hospitalTransport(HttpServletRequest request) throws Exception{
+					HttpHeaders responseHeader = new HttpHeaders();
+					responseHeader.add("Content-type", "application/xml; charset=utf-8");
+					String ykiho = request.getParameter("ykiho");
+					 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+					 
+					 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getTransportInfoList"); /*URL*/
+						urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+						urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+						urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+						urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+
+						urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+
+						URL url = new URL(urlBuilder.toString());
+						HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+						conn.setRequestMethod("GET");
+						conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
+						System.out.println("Response code: " + conn.getResponseCode());
+						BufferedReader rd;
+						if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+						    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						} else {
+						    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+						}
+						StringBuilder sb = new StringBuilder();
+						String line;
+						while ((line = rd.readLine()) != null) {
+						    sb.append(line);
+						}
+						rd.close();
+						conn.disconnect();
+						sb.toString();
+
+						System.out.println(sb.toString());
+					 
+					return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+				}
 	
-	
+				//hospital infomation detail 교통정보
+				@RequestMapping(value= "/hospitalEquipmentInfoList", method = RequestMethod.GET)
+				public ResponseEntity<String> hospitalEquipmentInfoList(HttpServletRequest request) throws Exception{
+					HttpHeaders responseHeader = new HttpHeaders();
+					responseHeader.add("Content-type", "application/xml; charset=utf-8");
+					String ykiho = request.getParameter("ykiho");
+					 ykiho = Objects.isNull(ykiho) ? "" : ykiho;
+					 
+					 StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getMedicalEquipmentInfoList"); /*URL*/
+						urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+						urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+						urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+						urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+
+						urlBuilder.append("&" + URLEncoder.encode("ykiho","UTF-8") + "=" + URLEncoder.encode(ykiho, "UTF-8")); /*암호화된 요양기호*/
+
+						URL url = new URL(urlBuilder.toString());
+						HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+						conn.setRequestMethod("GET");
+						conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
+						System.out.println("Response code: " + conn.getResponseCode());
+						BufferedReader rd;
+						if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+						    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+						} else {
+						    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+						}
+						StringBuilder sb = new StringBuilder();
+						String line;
+						while ((line = rd.readLine()) != null) {
+						    sb.append(line);
+						}
+						rd.close();
+						conn.disconnect();
+						sb.toString();
+
+						System.out.println(sb.toString());
+					 
+					return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+				}	
 }

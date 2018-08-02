@@ -15,10 +15,11 @@
  <script>
   $( function() {
     $("#datepicker").datepicker();
-	console.log( Number($("#YPos").val() ));
-	console.log( Number($("#XPos").val() ));
-    var mapx = Number($("#YPos").val());
-    var mapy = Number($("#XPos").val());
+
+    var mapx = Number($("#YPos").val() );
+    var mapy = Number($("#XPos").val() );
+
+
     /* 지도 초기 옵션 */
 	var map = new naver.maps.Map('map', mapOptions);
     	
@@ -31,7 +32,6 @@
             mapDataControl: false,
             zoomControl: true,
             minZoom: 1
-
     	};
     
    		var position = new naver.maps.LatLng(mapx, mapy);
@@ -51,9 +51,128 @@
     	};
     	var marker = new naver.maps.Marker(markerOptions);
     	map.panTo(new naver.maps.LatLng(mapx, mapy));
+    	
+    	
+    	  var code = String($("#ykiho").val() );
+    	  $.get("hospitalDetailView", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var ul =$("#timeTable");
+    			  var pl = $("#nearPlace");
 
-      } );
+    			  // 타임 테이블
+    			  ul.empty();
+    			  ul.append("<tr><th bgcolor='#F6F6F6' width='35%'>공휴일</th><td>"+it.find("noTrmtHoli").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>일요일</th><td>"+it.find("noTrmtSun").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>점심시간</th><td>"+it.find("lunchWeek").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>월요일</th><td>"+it.find("trmtMonStart").text()+"~"+it.find("trmtMonEnd").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>화요일</th><td>"+it.find("trmtTueStart").text()+"~"+it.find("trmtTueEnd").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>수요일</th><td>"+it.find("trmtWedStart").text()+"~"+it.find("trmtWedEnd").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>목요일</th><td>"+it.find("trmtThuStart").text()+"~"+it.find("trmtThuEnd").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>금요일</th><td>"+it.find("trmtFriStart").text()+"~"+it.find("trmtFriEnd").text()+"</td></tr><tr><th bgcolor='#F6F6F6' width='35%'>토요일</th><td>"+it.find("trmtSatStart").text()+"~"+it.find("trmtSatEnd").text()+"</td></tr>");
+    			 
+    			  // 병원 세부 위치
+    			  pl.empty();
+    			  pl.append(it.find("plcNm").text()+" "+it.find("plcDir").text()+" "+it.find("plcDist").text());
+    			  
+
+    		  }
+    		  
+ 	 		 });
+    	  
+    	  $.get("hospitalFacilityInfo", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var nl =$("#site_name");
+    			  var al = $("#site_addr");
+    			  var hl = $("#homepage");
+    			  var tl = $("#tel");
+    			  
+    			  // 병원 이름
+    			  nl.empty();
+    			  nl.append(it.find("yadmNm").text());
+    			
+    			  // 병원 주소
+    			  al.empty();
+    			  al.append(it.find("addr").text());
+    			  
+    			  // 홈페이지 
+    			  hl.empty();
+    			  hl.append("<h5>- 홈페이지</h5><a href='"+ it.find("hospUrl").text()+"' target='_blank' style='color: #06F'>"+ it.find("hospUrl").text()+"</a>");
+    			  
+    			  // 전화번호
+    			  tl.empty();
+    			  tl.append(it.find("telno").text());
+    		  }
+    		  
+ 			  });  
+    	  
+    	  $.get("hospitalSbjectInfoList", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var sl =$("#ss_txt");
+    			  sl.empty();
+    			  // 진료과목 출력
+    				for(var i=0; i<it.length; i++){
+    					 its=$(it[i]);
+    					 sl.append(its.find("dgsbjtCdNm").text()+" ");
+    				}
+
+    			
+    		  }
+ 			  });  
+    	  
+    	  
+    	  $.get("hospitalMdlrtInfoList", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var spl =$("#special");
+    			  spl.empty();
+    			  // 특수진료
+    				for(var i=0; i<it.length; i++){
+    					 its=$(it[i]);
+    					 
+    					 spl.append(its.find("srchCdNm").text()+" ");
+    				}
+
+    			
+    		  }
+ 			  }); 
+    	  
+    	  $.get("hospitalTransport", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var spl =$("#transport");
+    			  spl.empty();
+    			  // 교통정보
+    				for(var i=0; i<it.length; i++){
+    					 its=$(it[i]);    					 
+    					 spl.append(its.find("trafNm").text()+its.find("lineNo").text()+its.find("arivPlc").text()+its.find("dist").text()+its.find("dir").text()+"<br/>");
+    				}
+
+    			
+    		  }
+ 			  }); 
+    	  
+    	  $.get("hospitalEquipmentInfoList", {ykiho : code}, function(data, state){
+    		  // 성공한 경우
+    		  if(state == "success"){
+    			  var it= $(data).find("item");
+    			  var spl =$("#equipment");
+    			  spl.empty();
+    			  // 의료장비
+    				for(var i=0; i<it.length; i++){
+    					 its=$(it[i]);    					 
+    					 spl.append(its.find("oftCdNm").text()+" ");
+    				}
+
+    			
+    		  }
+ 			  }); 
+    	  
+    	  
+      } ); // 시작 function
   
+      
+
 		
 		
   </script>
@@ -65,7 +184,6 @@
 String code = (String) request.getParameter("ykiho"); 
 String mapx = request.getParameter("xpos");
 String mapy = request.getParameter("ypos");
-
 %>
 <div id="hd_wrapper">
         <ul id="tnb">
@@ -77,11 +195,8 @@ String mapy = request.getParameter("ypos");
         </ul>
 </div>
 <style type="text/css">
-
 .btn-search {background: red none repeat scroll 0 0; border-radius: 25px; color: #fff; font-size: 19px; height: 43px; padding: 0 35px; text-shadow: 1px 1px rgba(0, 0, 0, 0.5); }
-
 /* 예약 하기 style */
-
 .reservation {
   z-index: 15;
   position: relative;
@@ -94,7 +209,6 @@ String mapy = request.getParameter("ypos");
   margin: 100px auto 10px;
   overflow: hidden;
 }
-
 .reservation-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -261,12 +375,10 @@ String mapy = request.getParameter("ypos");
   z-index: 40;
   color: #FFFFFF;
 }
-
 .gender {
   margin-left: 30px;
   margin-bottom: 30px;
 }
-
 </style>
 
 
@@ -416,7 +528,8 @@ String mapy = request.getParameter("ypos");
                 
         <!-- 약도 --->
         <div class="hos_b_tit" id="viewMap">
-        <h5>병원 위치</h5><div id='map' style='width:100%;height:450px;'> </div>
+        <h5>- 병원 위치</h5><div id='map' style='width:100%;height:450px;'> </div>
+        <p id="nearPlace"></p>
  
     
         </div>
@@ -424,99 +537,46 @@ String mapy = request.getParameter("ypos");
 	<div class="hos_b_tit">
 		<span class="tit_area_top_bar"></span>
 			<h1>
+				<!-- 병원 이름 -->
 				<div id="site_name"></div>
 			</h1>
 			<h2>
-				- 주소 : <span id="site_addr">서울특별시 동작구 흑석로 102 (흑석동)</span>
+				- 주소 : <span id="site_addr"></span>
 			</h2>
-				<span class="ss_txt"> 내과, 신경과, 정신건강의학과, 외과, 정형외과, 신경외과,
-										흉부외과, 성형외과, 마취통증의학과, 산부인과, 소아청소년과, 안과, 이비인후과, 피부과, 비뇨의학과,
-										영상의학과, 방사선종양학과, 병리과, 진단검사의학과, 재활의학과, 핵의학과, 가정의학과, 응급의학과,
-										구강악안면외과, 치과보철과, 치과교정과, 치과보존과
-				</span>
+				<!-- 진료과목 -->
+				<span class="ss_txt" id="ss_txt"></span>
 	</div>
 	
-	<div class="hos_b_tit">
-		<h5>- 홈페이지</h5>
-			<a href="http://ch.cauhs.or.kr/" target="_blank" style="color: #06F">http://ch.cauhs.or.kr/</a>
-	</div>
+	<!-- 홈페이지 주소 -->
+	<div class="hos_b_tit" id="homepage">	</div>
 	
 	<div class="hos_b_tit">
 		<h5>- 진료시간</h5>
-			<table class="table_stat03">
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">일요일</th>
-						<td></td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">일요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">월요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">화요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">수요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">목요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">금요일</th>
-					<td>09:00 ~ 16:30</td>
-				</tr>
-				<tr>
-					<th bgcolor="#F6F6F6" width="35%">토요일</th>
-					<td>09:00 ~ 12:00</td>
-				</tr>
+			<table class="table_stat03" id="timeTable">
+				
 			</table>
 	</div>
 	
-	<div class="hos_b_tit">
+	<!-- 특수 진료정보 -->
+	<div class="hos_b_tit" >
 		<h5>- 특수진료정보</h5>
-			<p>제3차 의료급여기관, 응급의료병원, 성인·소아 중환자실, 신생아 중환자실, 가정간호실시병원,
-										알코올질환입원치료병원, 혈액투석, 체외충격파쇄석술, 사시수술, 인공와우이식술, 측두하악관절 자극요법,
-										인공심박동기이식술, 부정맥고주파절제술, 심율동전환제세동기거치술, 망막수술, 각막이식술, 간이식술, 신장이식술,
-										심장이식술, 공막이식술, 정맥류수술, 골수이식술, 안와골절정복술</p>
+			<p id="special"> </p>
+			
 	</div>
 								
 	<div class="hos_b_tit">
 		<h5>- 의료장비</h5>
-			<p>유방촬영장치, 콘빔CT, MRI, 혈액투석을위한인공신장기, 초음파영상진단기, 골밀도검사기, CT,
-										체외충격파쇄석기, 양전자단층촬영기 (PET)</p>
+			<p id="equipment"> </p>
 	</div>
 								
 	<div class="hos_b_tit">
 		<h5>- 교통정보</h5>
-			<p>
-										지하철 2,4호선 사당역 11번출구→5524번 버스 승차→중앙대입구 종점 하차 <br> 지하철
-										4,7호선 이수(총신대입구)역 2번출구→5524번 버스 승차→중앙대입구 종점 하차 <br> 지하철
-										4,7호선 이수(총신대입구)역 2번출구→363,752번 버스 승차→흑석역.명수대현대아파트 하차 5분거리 <br>
-										시내버스 5511 중앙대학교 <br> 시내버스 5517 중앙대 종점 <br> 시내버스 5524
-										중앙대 종점 <br> 시내버스 360 흑석역.명수대현대아파트 5분거리 <br> 시내버스 362
-										흑석역.명수대현대아파트 5분거리 <br> 시내버스 363 흑석역.명수대현대아파트 5분거리 <br>
-										시내버스 462 흑석역.명수대현대아파트 5분거리 <br> 시내버스 640 흑석역.명수대현대아파트
-										5분거리 <br> 시내버스 642 흑석역.명수대현대아파트 5분거리 <br> 시내버스 752
-										흑석역.명수대현대아파트 5분거리 <br> 시내버스 6411 흑석역.명수대현대아파트 5분거리 <br>
-										시내버스 9408 흑석역.명수대현대아파트 5분거리 <br> 시내버스 9408 흑석역.명수대현대아파트
-										5분거리 <br> 지하철 9호선 흑석역 3,4번출구 5분거리 <br> 지하철 7호선 상도역
-										5번출구→마을버스 1번 승차→병원 앞 하차 <br> 지하철 1호선 노량진역 1번출구→마을버스 1번
-										승차→병원 앞 하차 <br> 지하철 4호선 신용산역 3번출구→151번 버스 승차→병원 앞 하차
-			</p>
+			<p id="transport"> </p>
 	</div>
 								
 	<div class="hos_b_tit">
 		<h5>- 연락처</h5>
-			<p class="tel">
-				<a href="#">00-0000-0000</a>
-			</p>
+			<p id="tel"> </p>
 	</div>
         
 								
