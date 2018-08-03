@@ -1,15 +1,17 @@
-package com.medical.mongos;
+package com.medical.persistence;
 
 import org.bson.Document;
 import org.springframework.stereotype.Repository;
 
 import com.medical.domain.MedicalVO;
+import com.medical.mongos.MongoUtil;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 @Repository
 public class MongoDAO {
-	//bigbirds insert
-	public void insertMedicals(MedicalVO m) {
+	//medical insert
+	public FindIterable<Document> insertMedicals(MedicalVO m) {
 		MongoCollection<Document> col = MongoUtil.getCollection("test", "medical_list");
 		Document d = null;
 				try {
@@ -19,6 +21,8 @@ public class MongoDAO {
 					 e.getMessage();
 				}
 				col.insertOne(d);
+				
+				return (FindIterable<Document>) d;
 				
 	}
 

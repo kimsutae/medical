@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.medical.web">
+	<logger name="org.zerock.web">
 		<level value="info" />
 	</logger>
 	

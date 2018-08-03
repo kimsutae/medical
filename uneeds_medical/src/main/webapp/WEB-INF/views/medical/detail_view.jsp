@@ -19,7 +19,6 @@
     var mapx = Number($("#YPos").val() );
     var mapy = Number($("#XPos").val() );
 
-
     /* 지도 초기 옵션 */
 	var map = new naver.maps.Map('map', mapOptions);
     	
