@@ -25,8 +25,8 @@ public class InsertDAOImpl implements InsertDAO {
 	}
 
 	@Override
-	public List<SidoVO> selectFood() {
-		List<SidoVO> list = mysqlSession.selectList(namespace + ".list");
+	public List<SidoVO> selectSido() {
+		List<SidoVO> list = mysqlSession.selectList(namespace + ".selectSido");
 		return null;
 	}
 	

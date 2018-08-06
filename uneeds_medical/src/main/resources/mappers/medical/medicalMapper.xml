@@ -23,12 +23,7 @@
 	<insert id="sigunInsert">
 	 insert into m_sigun values(#{guncode}, #{gunname})
 	</insert>
-	
-	<!-- dong code insert -->
-	<insert id="dongInsert">
-	 insert into m_sigun values(#{guncode}, #{gunname})
-	</insert>
-	
+
 	<!-- 진료과목 insert -->
 	<insert id="treatmentInsert">
 	 insert into m_treatment values(#{mtcode}, #{mtname})
@@ -38,6 +33,10 @@
 	<insert id="kindsInsert">
 	 insert into m_kinds values(#{mkcode}, #{mkname})
 	</insert>
-
+		
+	<select id="selectSido" resultType="com.medical.domain.SidoVO">
+	select * from m_sido	
+	</select>
+	
 	
 </mapper>

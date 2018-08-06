@@ -22,7 +22,7 @@
 
 <div id="hd_wrapper">
         <ul id="tnb">
-                        <li><a href="#">회원가입</a></li>
+            <li><a href="#">회원가입</a></li>
             <li><a href="#"><b>로그인</b></a></li>
 
         </ul>
