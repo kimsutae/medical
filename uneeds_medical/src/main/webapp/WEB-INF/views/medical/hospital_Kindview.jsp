@@ -339,7 +339,7 @@ function bindKind(){
 		/* 메뉴 불러오기 */
 		for(var i=0; i<its.length; i++){
 		/* site-box 병원 메뉴 */	
-		ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/uneeds/medical/detailViewPage?ykiho="+$(its[i]).find("ykiho").text()+"&xpos="+$(its[i]).find("YPos").text()+"&ypos="+$(its[i]).find("XPos").text()+"'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("clCdNm").text() +"</a></div></li>");
+		ul.append("<li id='site-"+(i+1)+"' class='site-item' style='border: 0px none;'><h3><span class='icon-no' data-index='"+(i)+"'>"+(i+1)+"</span><span id='tt' data-code='"+$(its[i]).find("ykiho").text()+"'  data-mapx='"+$(its[i]).find("YPos").text()+"' data-mapy='"+$(its[i]).find("XPos").text()+"'><a href='/uneeds/medical/detailViewPage?ykiho="+$(its[i]).find("ykiho").text()+"&xpos="+$(its[i]).find("YPos").text()+"&ypos="+$(its[i]).find("XPos").text()+"'>"+$(its[i]).find("yadmNm").text() +"</span></a></h3><div class='addr'><a href='#'>"+$(its[i]).find("addr").text() +"</a></div></li>");
 			/* 마커 찍기 */
 			var position = new naver.maps.LatLng($(its[i]).find("YPos").text(), $(its[i]).find("XPos").text());
 			var markerOptions = {
