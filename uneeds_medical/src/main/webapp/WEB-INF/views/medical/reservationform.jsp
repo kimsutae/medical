@@ -5,7 +5,7 @@
 <head>
 <title>Hospital</title>
 
-<link rel="stylesheet" href="../resources/medical/css/reservation_test.css">
+<link rel="stylesheet" href="../../../resources/medical/css/reservation_test.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -32,7 +32,7 @@ var calendar = {
 			if (ajax) {
 
 	      $.ajax({
-	  				url: '../resources/medical/data/events.json',
+	  				url: '../../../resources/medical/data/events.json',
 	  				type: 'GET',
 	  			})
 	  			.done(function(data) {

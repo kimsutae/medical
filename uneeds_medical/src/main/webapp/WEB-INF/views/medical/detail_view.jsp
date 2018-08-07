@@ -573,8 +573,9 @@ String mapy = request.getParameter("ypos");
         
 <!-- 예약 폼 -->					
 <div class="hos_b_tit">
-<h5>- 병원 예약하기</h5>
-<div class="reservation">  
+<h5>- 병원 예약하기<img src="../../../resources/medical/img/reservation.png" style="width: 40px; height: auto;" id="reservation_form"></h5>
+<!-- 예약 content -->
+<div class="reservation" style="display:none">  
   <div class="reservation-panel one">
     <div class="reservation-header">
       <h1>병원 예약하기 </h1>
@@ -611,7 +612,7 @@ String mapy = request.getParameter("ypos");
       </form>
     </div>
   </div>  
-</div>
+</div> <!-- 예약 content 끝 -->
 </div> <!-- 예약폼 끝 -->
 
 </div>
@@ -623,6 +624,19 @@ String mapy = request.getParameter("ypos");
 </div>
 
 <!-- } 콘텐츠 끝 -->
+<script>
+$("#reservation_form").on("click",function(){
+	alert("눌림");
+	if($("#reservation").css("display")  =="none"){
+		$("#reservation").css({'display':'block'});
+	}else {
+		$("#reservation").css({'display':'none'});
+	}
 
+	
+});
+
+
+</script>
 </body>
 </html>

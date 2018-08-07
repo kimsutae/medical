@@ -35,13 +35,6 @@ public class MedicalController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MedicalController.class);
 
-	      
-	@RequestMapping(value = "/main_view")
-	public String view(Locale locale, Model model) {
-		return "main_view";
-		
-	}
-	
 	
 	// insert_medical
 	@RequestMapping(value = "/insert_medical", method = RequestMethod.POST)
@@ -60,6 +53,12 @@ public class MedicalController {
 		
 		col.insertOne(doc);
 		return "list";
+	}
+	
+	@RequestMapping(value = "/main_view")
+	public String view(Locale locale, Model model) {
+		return "main_view";
+		
 	}
 	
 	// medical_view page
@@ -82,6 +81,12 @@ public class MedicalController {
 		return "detail_view";
 	}
 	
+	// reservation form page
+	@RequestMapping(value = "/reservationView")
+	public String reservation(Locale locale, Model model) {
+		return "reservationform";
+		
+	}
 	
 	// select sido
 	@RequestMapping(value= "/hospitalSidoCode", method = RequestMethod.GET)
