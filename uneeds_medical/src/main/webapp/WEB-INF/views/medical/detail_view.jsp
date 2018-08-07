@@ -379,6 +379,7 @@ String mapy = request.getParameter("ypos");
   margin-left: 30px;
   margin-bottom: 30px;
 }
+
 </style>
 
 
@@ -575,44 +576,34 @@ String mapy = request.getParameter("ypos");
 <div class="hos_b_tit">
 <h5>- 병원 예약하기<img src="../../../resources/medical/img/reservation.png" style="width: 40px; height: auto;" id="reservation_form"></h5>
 <!-- 예약 content -->
-<div class="reservation" style="display:none">  
-  <div class="reservation-panel one">
-    <div class="reservation-header">
-      <h1>병원 예약하기 </h1>
-    </div>
-    <div class="reservation-content">
-      <form>
-        <div class="reservation-group">
-          <label for="username">예약자명</label>
-          <input type="text" id="username" name="username" required="required"/>
-        </div>
-        <div class="reservation-group">
-          <label for="phone">연락처</label>
-          <input type="text" id="phone" name="password" required="required"/>
-        </div>
-        <div class="reservation-group">
-          <label for="datepicker">방문 날짜</label>
-          <input type="text" id="datepicker" name="redate" required="required"/>
-        </div>
-        <div class="reservation-group">
-          <label for="password">방문시간</label>
-          <input type="text" id="password" name="retime" required="required"/>
-        </div>
-        <div class="reservation-group">
-          <div class="gender">
-			<input type="radio" value="None" id="male" name="gender" checked/>
-  			<label for="male" class="radio" chec>Male</label>
-			<input type="radio" value="None" id="female" name="gender" />
-  			<label for="female" class="radio">Female</label>
- 		  </div>
-        </div>
-        <div class="reservation-group">
-          <button type="submit">예약하기</button>
-        </div>
-      </form>
-    </div>
-  </div>  
-</div> <!-- 예약 content 끝 -->
+<div class="reservation">  
+					<div class="reservation-panel one">
+ 						<div class="reservation-header">
+    					</div>
+    				<div class="reservation-content">
+      					<form>
+        					<div class="reservation-group">
+          						<label for="username">예약자명</label>
+          							<input type="text" id="username" name="username" required="required"/>
+        					</div>
+        			<div class="reservation-group">
+          				<label for="phone">연락처</label>
+          					<input type="text" id="phone" name="password" required="required"/>
+        			</div>
+        			<div class="reservation-group">
+          				<div class="gender">
+							<input type="radio" value="None" id="male" name="gender" checked/>
+  							<label for="male" class="radio" chec>Male</label>
+							<input type="radio" value="None" id="female" name="gender" />
+  							<label for="female" class="radio">Female</label>
+ 		  				</div>
+        			</div>
+        					<div class="reservation-group">
+          						<button type="submit">예약하기</button>
+        					</div>
+      					</form>
+    				</div>
+ 					</div>  
 </div> <!-- 예약폼 끝 -->
 
 </div>
@@ -626,11 +617,14 @@ String mapy = request.getParameter("ypos");
 <!-- } 콘텐츠 끝 -->
 <script>
 $("#reservation_form").on("click",function(){
-	alert("눌림");
-	if($("#reservation").css("display")  =="none"){
-		$("#reservation").css({'display':'block'});
-	}else {
-		$("#reservation").css({'display':'none'});
+	alert("눌렷옹");
+	openPopup();
+	
+	function openPopup(){
+		window.open("http://localhost:8080/uneeds/medical/reservationView", option);
+		var url = "http://localhost:8080/uneeds/medical/reservationView";
+		var option = "width=370, height=360, resizable=no, scrollbars=no, status=no;";
+		
 	}
 
 	

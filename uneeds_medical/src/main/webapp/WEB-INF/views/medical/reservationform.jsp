@@ -262,9 +262,43 @@ var calendar = {
 		<section id="contents" class="consult consult_bg01">
 
 			<h2>온라인 예약</h2>
+			<div class="step02">
+			<form name="f1" method="post" action="">
+				<fieldset>
+					<legend>예약정보 입력</legend>
+						<dl class="info">
+							<dt><h3>1. 개인정보 입력</h3></dt>
+							<dd>
+							<div class="reservation-group">
+          						<label for="username">예약자명</label>
+          							<input type="text" id="username" name="username" required="required"/>
+        					</div>
+        					
+        					<div class="reservation-group">
+          						<label for="phone">연락처</label>
+          							<input type="text" id="phone" name="password" required="required"/>
+        					</div>
+        					<div class="reservation-group">
+          						<label for="phone">성별</label>
+          							<div class="gender">          							
+									<input type="radio" value="None" id="male" name="gender" checked/>
+  									<label for="male" class="radio" chec>Male</label>
+									<input type="radio" value="None" id="female" name="gender" />
+  									<label for="female" class="radio">Female</label>
+ 		  						</div>
+        					</div>
+        			
+							</dd>
+							
+							
+						</dl>
+				</fieldset>
+				</form>
+	
+			</div>
 
 			<div class="step03">
-				<form name="f1" method="post" action="">
+				<form name="f2" method="post" action="">
 					<input name="Rday" value="2018-07-20" type="hidden">
 					<input name="rchk" value="" type="hidden">
 					<input name="renz" value="미사용" type="hidden">
