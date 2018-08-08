@@ -47,7 +47,8 @@ function buildCalendar(){
   //달력 출력
   for(i=1; i<=lastDate.getDate(); i++){
     cell =row.insertCell();
-    day = "<span class='choice' data-index="+i+">";
+    day = "<span id='choice"+i+"' onclick='javascript:choiceDate(choice"+i+");'";
+    day += "data-index="+i+" value="+i+">";
     day += i;
     day +="</span>";
     cell.innerHTML = day;
@@ -59,32 +60,19 @@ function buildCalendar(){
 }
 
 
-$('.calendar tbody td').click(function(){
-	alert("눌림");
-});
-
 </script>
-     <script>
-    $(function(){
-        $("#choice").on("click",function(){
-        	var ind = $(this).data("index");
-        	consolo.log(ind);
-        	alert(ind);
-        });
-       });
-    
-    </script>
+
   
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <body>
 
-		<section id="contents" class="consult consult_bg01">
-
+<section id="contents" class="consult consult_bg01">
+		<form>
 			<h2>온라인 예약</h2>
 			<div class="step02">
-			<form name="f1" method="post" action="">
+			
 				<fieldset>
 					<legend>예약정보 입력</legend>
 						<dl class="info">
@@ -101,10 +89,10 @@ $('.calendar tbody td').click(function(){
         					</div>
         					<div class="reservation-group">
           						<label for="phone">성별</label>
-          							<div class="gender">          							
-									<input type="radio" value="None" id="male" name="gender" checked/>
+          							<div class="gender">
+									<input type="radio" value="male" id="male" name="gender" checked/>
   									<label for="male" class="radio" chec>Male</label>
-									<input type="radio" value="None" id="female" name="gender" />
+									<input type="radio" value="female" id="female" name="gender" />
   									<label for="female" class="radio">Female</label>
  		  						</div>
         					</div>
@@ -114,12 +102,11 @@ $('.calendar tbody td').click(function(){
 							
 						</dl>
 				</fieldset>
-				</form>
+
 	
 			</div>
 
 			<div class="step03">
-				<form name="f2" method="post" action="">
 					<input name="Rday" value="2018-07-20" type="hidden">
 					<input name="rchk" value="" type="hidden">
 					<input name="renz" value="미사용" type="hidden">
@@ -202,13 +189,8 @@ $('.calendar tbody td').click(function(){
 											<ul class="time10">
 												 
 														<li><span class="un">00</span></li>	
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
 														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
-														
-													
+					
 											</ul>
 										</td>
 									</tr>
@@ -218,11 +200,7 @@ $('.calendar tbody td').click(function(){
 											<ul class="time10">
 												 
 														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
 														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -231,11 +209,7 @@ $('.calendar tbody td').click(function(){
 										<td>
 											<ul class="time10">
 														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
 														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -259,11 +233,7 @@ $('.calendar tbody td').click(function(){
 											<ul class="time10">
 												 
 														<li><span class="un active">00</span></li>
-														<li><span class="un active">10</span></li>
-														<li><span class="un active">20</span></li>
 														<li><span class="un active">30</span></li>
-														<li><span class="un active">40</span></li>
-														<li><span class="un active">50</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -272,11 +242,7 @@ $('.calendar tbody td').click(function(){
 										<td>
 											<ul class="time10">
 														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
-														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>													
+														<li><span class="un">30</span></li>												
 											</ul>
 										</td>
 									</tr>
@@ -285,11 +251,7 @@ $('.calendar tbody td').click(function(){
 											<td>
 											<ul class="time10">
 														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
 														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -298,11 +260,7 @@ $('.calendar tbody td').click(function(){
 											<td>
 											<ul class="time10">
 														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
 														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -310,15 +268,8 @@ $('.calendar tbody td').click(function(){
 										<th class="hour pm">5시</th>
 											<td>
 											<ul class="time10">
-												 
-														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
-														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
-														
-													
+												<li><span class="un">00</span></li>
+												<li><span class="un">30</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -326,16 +277,8 @@ $('.calendar tbody td').click(function(){
 										<th class="hour pm">6시</th>
 											<td>
 											<ul class="time10">
-												 
-													
-														<li><span class="un">00</span></li>
-														<li><span class="un">10</span></li>
-														<li><span class="un">20</span></li>
-														<li><span class="un">30</span></li>
-														<li><span class="un">40</span></li>
-														<li><span class="un">50</span></li>
-														
-													
+												<li><span class="un">00</span></li>
+												<li><span class="un">30</span></li>
 											</ul>
 										</td>
 									</tr>
@@ -355,14 +298,61 @@ $('.calendar tbody td').click(function(){
 							(한달 뒤 예약은 전화상담으로 부탁 드립니다.)
 						</p>
 					</div>
-					
+						
+								<hr>
+								<button type="submit" class="btn_side">예약하기</button>
+							
 					</fieldset>
-				</form>
-			</div>
+						</div>
+	
 			
-		</section>
+
+</form>
+</section>
 
 <!-- } 콘텐츠 끝 -->
 
+     <script>
+     $(".btn_side").on("click", function(){
+    	var name = $("#username").val();
+    	var phone = $("#phone").val();
+    	var gender = $("#gender").val();
+    	console.log(name);
+    	console.log(phone);
+    	console.log(gender);
+    	
+    	alert(gender);
+     });
+     
+     function choiceDate(id){
+    	 alert("눌렷다");
+    	 var ids = id;
+    	 var test = ids.getAttribute('data-index');
+//     	 var num = ind.getAttribute('data-index');
+		 console.log(ids);
+		 console.log(test);
+		 
+		 alert(test);
+    	 
+    	 
+     }
+     
+     $(function(){
+    	 
+    	 $(".choice").click(function(){
+    		alert("눌리냐?");
+    	 });
+    	 
+     // 이거 왜 안돼?
+        $("#con").on("click",".choice",function(){
+        	alert("눌리냐");
+        	var ind = $(this).data("index");
+        	
+        	consolo.log(ind);
+        	alert(ind);
+        });    
+     });
+    </script>
 </body>
 </html>
+
