@@ -47,10 +47,7 @@ function buildCalendar(){
   //달력 출력
   for(i=1; i<=lastDate.getDate(); i++){
     cell =row.insertCell();
-    day = "<span class='choice' data-index="+i+">";
-    day += i;
-    day +="</span>";
-    cell.innerHTML = day;
+    cell.innerHTML = i;
     cnt = cnt + 1;
     if (cnt%7 == 0)    //1주=7일
      row = calendar.insertRow();
@@ -64,16 +61,7 @@ $('.calendar tbody td').click(function(){
 });
 
 </script>
-     <script>
-    $(function(){
-        $("#choice").on("click",function(){
-        	var ind = $(this).data("index");
-        	consolo.log(ind);
-        	alert(ind);
-        });
-       });
-    
-    </script>
+  
   
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
