@@ -15,14 +15,11 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		<!-- MySQL dataSource -->
-	<bean id="mysqlDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="mysqlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-<!-- 		<property name="url" value="jdbc:log4jdbc:mysql://192.168.0.64:3306/uneeds_db?useSSL=false&amp;serverTimezone=Asia/Seoul"></property> -->
-		<property name="url" value="uneedstest?serverTimezone=UTC"></property>
-<!-- 		<property name="username" value="root"></property> -->
-<!-- 		<property name="password" value="1234"></property> -->
+<!-- 		<property name="url" value="jdbc:log4jdbc:mysql://192.168.0.18:3306/uneeds_db?useSSL=false&amp;serverTimezone=Asia/Seoul"></property> -->
+		<property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/uneedstest?useSSL=false&amp;serverTimezone=Asia/Seoul"></property>
 		<property name="username" value="uneeds_test"></property>
 		<property name="password" value="Tiger07#"></property>
 	</bean>

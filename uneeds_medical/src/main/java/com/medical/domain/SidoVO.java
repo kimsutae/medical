@@ -2,36 +2,39 @@ package com.medical.domain;
 
 public class SidoVO {
 	// 멤버변수
-	private int code;
-	private String palce;
+	private int sicode;
+	private String siname;
 	
 	
 	public SidoVO() {}
 	
 	public SidoVO(int code, String palce) {
 		super();
-		this.code = code;
-		this.palce = palce;
+		this.sicode = code;
+		this.siname = palce;
 	}
-	
-	public int getCode() {
-		return code;
+
+	public int getSicode() {
+		return sicode;
 	}
-	public void setCode(int code) {
-		this.code = code;
+
+	public void setSicode(int sicode) {
+		this.sicode = sicode;
 	}
-	public String getPalce() {
-		return palce;
+
+	public String getSiname() {
+		return siname;
 	}
-	public void setPalce(String palce) {
-		this.palce = palce;
+
+	public void setSiname(String siname) {
+		this.siname = siname;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "SidoVO [code=" + code + ", palce=" + palce + "]";
+		return "SidoVO [sicode=" + sicode + ", siname=" + siname + "]";
 	}
-	
+
 	
 
 }

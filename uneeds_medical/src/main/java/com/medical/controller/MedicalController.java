@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bson.Document;
@@ -23,8 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.medical.domain.KindsVO;
 import com.medical.domain.MedicalVO;
+import com.medical.domain.SidoVO;
+import com.medical.domain.SigunVO;
+import com.medical.domain.ThemaVO;
 import com.medical.mongos.MongoUtil;
+import com.medical.persistence.InsertDAO;
 import com.mongodb.client.MongoCollection;
 
 /**
@@ -34,7 +40,45 @@ import com.mongodb.client.MongoCollection;
 public class MedicalController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MedicalController.class);
+	
+	@Inject
+	private InsertDAO dao;
+	
+	
+	// insert_test
+	@RequestMapping(value = "/insertList")
+	public String test(Locale locale) {
+		return "saveAPI_test";
+		
+	}
 
+	// insert_sido
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public String insertSido(SidoVO vo){
+		dao.insertSido(vo);
+		return "saveAPI_test";
+	}
+	
+	// insert_sigun
+	@RequestMapping(value = "/insertGun", method = RequestMethod.POST)
+	public String insertSigun(SigunVO vvo){
+		dao.insertSigun(vvo);
+		return "saveAPI_test";
+	}
+	
+	// insert_kinds
+	@RequestMapping(value = "/insertKinds", method = RequestMethod.POST)
+	public String insertKinds(KindsVO ko){
+		dao.insertKinds(ko);
+		return "saveAPI_test";
+	}
+	
+	// insert_thema
+	@RequestMapping(value = "/insertThema", method = RequestMethod.POST)
+	public String insertThema(ThemaVO to){
+		dao.insertThema(to);
+		return "saveAPI_test";
+	}
 	
 	// insert_medical
 	@RequestMapping(value = "/insert_medical", method = RequestMethod.POST)
@@ -251,11 +295,47 @@ public class MedicalController {
 		rd.close();
 		conn.disconnect();
 		System.out.println(sb.toString());
-
 		
 		return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
 		
 	}
+	
+	//hospital thema list
+		@RequestMapping(value= "/hospitalThemaCode", method = RequestMethod.GET)
+		public ResponseEntity<String> hospitalThemaCode(HttpServletRequest request) throws Exception{
+			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/codeInfoService/getMedicInsttClassesCodeList"); /*URL*/
+			urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D"); /*Service Key*/
+			urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("h1WoDyOi4e8rhTTYSuSJmN5H5sMOoJZhuTOsYTgxzzOEJaarD%2FrWJBttt15QA9Dw5h9Tj4%2BslQNc7eTa49aOOg%3D%3D", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+			urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+			
+			HttpHeaders responseHeader = new HttpHeaders();
+			responseHeader.add("Content-type", "application/json; charset=utf-8");
+
+			URL url = new URL(urlBuilder.toString());
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
+			System.out.println("Response code: " + conn.getResponseCode());
+			BufferedReader rd;
+			if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else {
+			    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			}
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+			    sb.append(line);
+			}
+			rd.close();
+			conn.disconnect();
+			System.out.println(sb.toString());
+			
+			return new ResponseEntity<String>(sb.toString(), responseHeader, HttpStatus.CREATED);
+			
+		}
+	
 	
 	// hospital info view
 	@RequestMapping(value= "/hospitalInfoView", method = RequestMethod.GET)

@@ -337,21 +337,6 @@ function buildCalendar(){
     	 
      }
      
-     $(function(){
-    	 
-    	 $(".choice").click(function(){
-    		alert("눌리냐?");
-    	 });
-    	 
-     // 이거 왜 안돼?
-        $("#con").on("click",".choice",function(){
-        	alert("눌리냐");
-        	var ind = $(this).data("index");
-        	
-        	consolo.log(ind);
-        	alert(ind);
-        });    
-     });
     </script>
 </body>
 </html>

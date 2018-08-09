@@ -40,12 +40,12 @@ public class Medical_serviceImpl implements Medical_service {
 
 	@Override
 	public void insert_sido(SidoVO sido) throws Exception {
-		dao2.insertData(sido);
+		dao2.insertSido(sido);
 	}
 
 	@Override
 	public void insert_sigun(SidoVO sigun) throws Exception {
-		 dao2.insertData(sigun);
+		 dao2.insertSido(sigun);
 		
 	}
 
