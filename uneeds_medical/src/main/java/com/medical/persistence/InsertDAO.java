@@ -13,4 +13,6 @@ public interface InsertDAO {
 	public void insertKinds(KindsVO ko);
 	public void insertThema(ThemaVO to);
 	
+	
+	
 }
