@@ -75,32 +75,54 @@ function buildCalendar(){
 			
 				<fieldset>
 					<legend>예약정보 입력</legend>
-						<dl class="info">
-							<dt><h3>1. 개인정보 입력</h3></dt>
-							<dd>
-							<div class="reservation-group">
-          						<label for="username">예약자명</label>
-          							<input type="text" id="username" name="username" required="required"/>
-        					</div>
-        					
-        					<div class="reservation-group">
-          						<label for="phone">연락처</label>
-          							<input type="text" id="phone" name="password" required="required"/>
-        					</div>
-        					<div class="reservation-group">
-          						<label for="phone">성별</label>
-          							<div class="gender">
-									<input type="radio" value="male" id="male" name="gender" checked/>
-  									<label for="male" class="radio" chec>Male</label>
-									<input type="radio" value="female" id="female" name="gender" />
-  									<label for="female" class="radio">Female</label>
- 		  						</div>
-        					</div>
+					<div class="con_left">
+						<dl class="info_left">
+								<dt><h3>1. 개인정보 입력</h3></dt>
+								<dd>
+								<div class="reservation-group">
+									<div class="name">
+          								<label for="username">예약자명
+          									<input type="text" id="username" name="username" required="required" style="float:right; margin-top: 0px;"/></label>
+          							</div>
+        				
+        					    	<div class="phone">    					
+          								<label for="phone">연락처
+          									<input type="text" id="phone" name="password" required="required" style="float:right; margin-top: 0px;"/></label>
+        							</div>
+        						
+        							<div class="genderlist">
+          								<label for="phone" style="display:inline-block;">성별</label>
+          									<div class="gender">		
+  												<input type="radio" value="male" id="male" name="gender" checked/> Male										
+  												<input type="radio" value="female" id="female" name="gender" /> Female
+  									
+ 		  									</div>
+ 		  							</div>
+        						</div>
         			
-							</dd>
+								</dd>
+							</dl>
+							
+
+							<dl class="info_right">
+								<dt><h3>2. 문항리스트</h3></dt>
+								<dd>
+	        						<div class="reservation-group">
+          								<div class="checklist">
+											<label for="male" class="radio" chec> <input type="checkbox" value="male" id="male" name="gender" />고혈압</label>
+  											<label for="female" class="radio"><input type="checkbox" value="male" id="female" name="gender" />저혈압</label>
+ 		  								</div>
+        						</div>
+        			
+								</dd>
 							
 							
-						</dl>
+							</dl>	
+						
+						</div>
+						
+						
+						
 				</fieldset>
 
 	
@@ -325,16 +347,9 @@ function buildCalendar(){
      });
      
      function choiceDate(id){
-    	 alert("눌렷다");
     	 var ids = id;
     	 var test = ids.getAttribute('data-index');
-//     	 var num = ind.getAttribute('data-index');
-		 console.log(ids);
 		 console.log(test);
-		 
-		 alert(test);
-    	 
-    	 
      }
      
     </script>

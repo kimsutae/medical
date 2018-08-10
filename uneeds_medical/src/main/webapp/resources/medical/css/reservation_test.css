@@ -1,8 +1,31 @@
+/*body style*/
+.consult_bg01{width: 887px; height: 1450px;}
+
 /* reservation_step02 */
-.step02 dl.info dt {width:330px;height:40px;border-bottom:3px solid #529ae6; margin-left: 40px}
-.step02 dl.info dt h3 {width:150px;height:40px;margin:0 0 0 10px;background:#529ae6  no-repeat 100% 0;color:#fff;line-height:40px;font-size:18px;text-indent:10px;}
-.step02 dl.info dd {width:328px;height:133px;margin-bottom:20px;border:1px solid #adc8cd;border-top:none;font-size:12px;color:#717b81;}
-.step02 dl.info dd label {
+.step02 dl.info_left{width: 340px; height: 200px;display: inline-block;}
+.step02 dl.info_left dt {width:330px;height:40px;border-bottom:3px solid #529ae6; margin-left: 40px}
+.step02 dl.info_left dt h3 {width:150px;height:40px;margin:0 0 0 10px;background:#529ae6  no-repeat 100% 0;color:#fff;line-height:40px;font-size:18px;text-indent:10px;}
+.step02 dl.info_left dd {width:328px;height:133px;margin-bottom:20px;border:1px solid #adc8cd;border-top:none;font-size:12px;color:#717b81;}
+.step02 dl.info_left dd label {
+	margin:10px 0 0 10px;
+	display: block;
+ 	color: rgba(0, 0, 0, 0.6);
+ 	font-size: 12px;
+ 	line-height: 1;
+  	text-transform: uppercase;
+ 	letter-spacing: .2em;
+  }
+  
+.step02 dl.info_left dd input {
+	margin:10px 10px 0 10px;
+	border-radius: 4px;
+	}
+
+.step02 dl.info_right{width: 400px; height: 200px; float: right; display: inline-block;}
+.step02 dl.info_right dt {width:330px;height:40px;border-bottom:3px solid #529ae6; margin-left: 40px}
+.step02 dl.info_right dt h3 {width:150px;height:40px;margin:0 0 0 10px;background:#529ae6  no-repeat 100% 0;color:#fff;line-height:40px;font-size:18px;text-indent:10px;}
+.step02 dl.info_right dd {width:328px;height:133px;margin-bottom:20px;border:1px solid #adc8cd;border-top:none;font-size:12px;color:#717b81;}
+.step02 dl.info_right dd label {
 	margin:10px 0 0 10px;
 	display: block;
  	color: rgba(0, 0, 0, 0.6);
@@ -13,7 +36,7 @@
  	letter-spacing: .2em;
   }
   
-.step02 dl.info dd input {
+.step02 dl.info_right dd input {
 	margin:10px 10px 0 10px;
 	border-radius: 4px;
 	}
@@ -32,12 +55,19 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin: 0px 0 20px;
+  
 }
+
+.name{width: 320px;}
+.phone{width: 320px;}
+.genderlist{width: 320px; display: inline-block;}
 
 .gender {
 	margin: 0px 0 20px;
-	width:173px;
+	width:200px;
 	height: 21px;
+	float: right;
+	display: inline-block;
 }
 
 /* reservation_step03 */
