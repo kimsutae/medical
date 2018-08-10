@@ -313,9 +313,7 @@ String mapy = request.getParameter("ypos");
 
 
 	function openPopup(){
-		window.open("http://localhost:8080/uneeds/medical/reservationView", option);
-// 		var url = "http://localhost:8080/uneeds/medical/reservationView";
-// 		var url = "http://192.168.0.18:8080/uneeds/medical/reservationView";
+		window.open("http://192.168.0.18:8080/uneeds/medical/reservationView", option);
 
 		var option = "width=370, height=360, resizable=no, scrollbars=no, status=no;";
 		
