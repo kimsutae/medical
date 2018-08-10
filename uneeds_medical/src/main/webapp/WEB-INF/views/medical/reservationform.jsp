@@ -11,8 +11,18 @@
 
 
 <script type="text/javascript">
+$(function(){
+	checkToday();
+});
 var today = new Date();//오늘 날짜
 
+function checkToday(){
+	console.log(today.getDate());	
+	if(today.getDate()== 10){
+		alert("성공");
+		$("#site-"+index).css({'border':'2px solid red'});
+	}
+}
 
 function prevClaendar(){//이전 달력
   today = new Date(today.getFullYear(), today.getMonth()-1,today.getDate());
@@ -352,6 +362,7 @@ function buildCalendar(){
 		 console.log(test);
      }
      
+
     </script>
 </body>
 </html>
