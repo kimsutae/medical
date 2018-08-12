@@ -14,6 +14,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+<<<<<<< HEAD
 	
 	<!-- MySQL dataSource -->
 	<bean id="mysqlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -43,3 +44,32 @@
 		
 </beans>
 
+=======
+		<!-- MySQL dataSource -->
+	<bean id="mysqlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+<!-- 		<property name="url" value="jdbc:log4jdbc:mysql://192.168.0.18:3306/uneeds_db?useSSL=false&amp;serverTimezone=Asia/Seoul"></property> -->
+		<property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/uneedstest?useSSL=false&amp;serverTimezone=Asia/Seoul"></property>
+		<property name="username" value="uneeds_test"></property>
+		<property name="password" value="Tiger07#"></property>
+	</bean>
+	
+	<bean id="mysqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="mysqlDataSource"></property> <!-- ref에 bean의 id (DI,할당)  -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property> 
+	</bean>
+	
+	<!-- sqlSessionTemplate의 설정 -->
+	<bean id="mysqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="mysqlSessionFactory"></constructor-arg>
+	</bean>
+	<!-- 요청 mysqlSession -->
+	
+	<!-- 의료 -->
+	<context:component-scan base-package="com.medical.persistence"/>
+	<context:component-scan base-package="com.medical.service"/>
+		
+</beans>
+>>>>>>> branch 'master' of https://github.com/kimsutae/medical.git

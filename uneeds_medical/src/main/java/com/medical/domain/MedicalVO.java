@@ -1,7 +1,10 @@
 package com.medical.domain;
 
 public class MedicalVO {
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/kimsutae/medical.git
 	// 멤버변수
 	private int num;
 	private String addr; //주소
