@@ -15,10 +15,6 @@
 <body>
 
 
-<div id="hd">
-    <h1 id="hd_h1">좋은병원</h1>
-    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
-    
 
 <div id="hd_wrapper">
         <ul id="tnb">
@@ -58,8 +54,6 @@
         
     </div>
 
-    
-    <hr>
     
     <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
